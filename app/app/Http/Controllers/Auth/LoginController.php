@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -16,22 +15,34 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'usuario' => 'required',
             'password' => 'required',
         ]);
 
         // Credenciales predefinidas
-        $predefinedEmail = 'a@gmail.com';
-        $predefinedPassword = 'asd';
+        $predefinedUser = [
+            'admin' => ['password' => 'asd', 'rol' => 'admin'],
+            'recepcionista' => ['password' => '123', 'rol' => 'recepcionista']
+        ];
 
-        if ($credentials['email'] === $predefinedEmail && $credentials['password'] === $predefinedPassword) {
-            // Simular autenticación exitosa
+        if (
+            isset($predefinedUser[$credentials['usuario']]) &&
+            $credentials['password'] === $predefinedUser[$credentials['usuario']]['password']
+        ) {
+            // Guardar el rol en sesión
+            $request->session()->put('rol', $predefinedUser[$credentials['usuario']]['rol']);
             $request->session()->regenerate();
-            return redirect()->route('personas.index');
+
+            // Redirigir según el rol
+            if ($predefinedUser[$credentials['usuario']]['rol'] === 'admin') {
+                return view('admin.index'); // Vista para admin
+            } elseif ($predefinedUser[$credentials['usuario']]['rol'] === 'recepcionista') {
+                return view('recepcionista.index'); // Vista para recepcionista
+            }
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'usuario' => 'Las credenciales no coinciden con nuestros registros.',
         ]);
     }
 }

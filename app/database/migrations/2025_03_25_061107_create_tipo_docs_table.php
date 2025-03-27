@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -16,6 +17,13 @@ return new class extends Migration
             $table->string('tipo_doc');
             $table->timestamps();
         });
+
+        DB::table('tipo_docs')->insert([
+            ['tipo_doc' => 'Cédula de ciudadanía'],
+            ['tipo_doc' => 'Tarjeta de identidad'],
+            ['tipo_doc' => 'Cédula de extranjería'],
+            ['tipo_doc' => 'Pasaporte']
+        ]);
     }
 
     /**

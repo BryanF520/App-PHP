@@ -17,7 +17,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    @if (request()->is('login'))
                     <li class="nav-item"><a class="nav-link" href="{{ route('personas.index') }}">Personas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('empresas.index') }}">Empresas</a></li>
+                    @endif
                 </ul>
             </div>
         </div>

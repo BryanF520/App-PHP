@@ -18,7 +18,7 @@ class RolController extends Controller
     public function index()
     {
         $roles = $this->rolService->listarRoles();
-        return view('roles.index', compact('roles'));
+        return view('index');
     }
 
     public function create()

@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personas;
+use App\Models\Rol;
+use App\Models\Tipo_doc;
 use Illuminate\Http\Request;
 use App\Contracts\PersonaServiceInterface;
+use App\Contracts\RolServiceInterface;
+use App\Contracts\TipodocServiceInterface;
 
 class PersonasController extends Controller
 {
     protected $personasService;
+    protected $rolService;
+    protected $tipodocService;
 
-    public function __construct(PersonaServiceInterface $personasService)
+    public function __construct(PersonaServiceInterface $personasService, RolServiceInterface $rolService, TipodocServiceInterface $tipodocService)
     {
         $this->personasService = $personasService;
+        $this->rolService = $rolService;
+        $this->tipodocService = $tipodocService;
     }
 
     public function index()
@@ -23,7 +31,9 @@ class PersonasController extends Controller
 
     public function create()
     {
-        return view('personas.create');
+        $roles = Rol::all();
+        $tipodocs = Tipo_doc::all();
+        return view('personas.create', compact('roles', 'tipodocs'));
     }
 
 
@@ -55,25 +65,30 @@ class PersonasController extends Controller
     public function edit($id)
     {
         $persona = $this->personasService->obtenerPersona($id);
-        return view('personas.edit', compact('persona'));
+        $roles = Rol::all();
+        $tipodocs = Tipo_doc::all();
+        return view('personas.edit', compact('persona', 'roles', 'tipodocs'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tipo_doc' => 'required',
-            'num_doc' => 'required|unique:personas,num_doc,' . $id,
-            'nombre_uno' => 'required',
+            'tipo_doc' => 'nullable',
+            'num_doc' => 'nullable|unique:personas,num_doc,' . $id . ',id',
+            'nombre_uno' => 'nullable',
             'nombre_dos' => 'nullable',
-            'apellido_uno' => 'required',
+            'apellido_uno' => 'nullable',
             'apellido_dos' => 'nullable',
-            'edad' => 'required',
-            'fecha_nacimiento' => 'required',
-            'email' => 'required|email|unique:personas,email,' . $id,
-            'rol_id' => 'required',
+            'edad' => 'nullable',
+            'fecha_nacimiento' => 'nullable',
+            'email' => 'nullable|email|unique:personas,email,' . $id . ',id',
+            'rol_id' => 'nullable|exists:rols,id',
         ]);
 
-        $this->personasService->actualizarPersona($id, $request->all());
+        $persona = $this->personasService->actualizarPersona($id, $request->all());
+        if (!$persona) {
+            return back()->withErrors('Error al actualizar la persona.');
+        }
         return redirect()->route('personas.index')->with('success', 'Persona actualizada correctamente');
     }
 

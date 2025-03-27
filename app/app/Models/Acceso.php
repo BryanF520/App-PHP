@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Acceso extends Model
 {
-    protected $fillable = ['id_vistante', 'motivo', 'estad', 'fecha', 'empresa_id'];
+    protected $fillable = ['persona_id', 'motivo', 'estado', 'fecha_ingreso', 'empresa_id'];
 
     public function persona()
     {
