@@ -24,9 +24,7 @@
                     <th>Segundo Nombre</th>
                     <th>Primer Apellido</th>
                     <th>Segundo Apellido</th>
-                    <th>Edad</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Email</th>
+                    <th>Telefono</th>
                     <th>Rol</th>
                     <th>Acciones</th>
                 </tr>
@@ -41,9 +39,7 @@
                     <td>{{ $persona->nombre_dos }}</td>
                     <td>{{ $persona->apellido_uno }}</td>
                     <td>{{ $persona->apellido_dos }}</td>
-                    <td>{{ $persona->edad }}</td>
-                    <td>{{ $persona->fecha_nacimiento }}</td>
-                    <td>{{ $persona->email }}</td>
+                    <td>{{ $persona->telefono }}</td>
                     <td>{{ $persona->rol_id }}</td>
                     <td>
                         <div class="d-flex gap-2">

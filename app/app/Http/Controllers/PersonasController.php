@@ -46,9 +46,7 @@ class PersonasController extends Controller
             'nombre_dos' => 'nullable',
             'apellido_uno' => 'required',
             'apellido_dos' => 'nullable',
-            'edad' => 'required',
-            'fecha_nacimiento' => 'required',
-            'email' => 'required|email|unique:personas',
+            'telefono' => 'required|unique:personas',
             'rol_id' => 'required',
         ]);
 
@@ -79,9 +77,7 @@ class PersonasController extends Controller
             'nombre_dos' => 'nullable',
             'apellido_uno' => 'nullable',
             'apellido_dos' => 'nullable',
-            'edad' => 'nullable',
-            'fecha_nacimiento' => 'nullable',
-            'email' => 'nullable|email|unique:personas,email,' . $id . ',id',
+            'telefono' => 'nullable|unique:personas',
             'rol_id' => 'nullable|exists:rols,id',
         ]);
 

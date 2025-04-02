@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Personas extends Model
 {
-    protected $fillable = ['tipo_doc', 'num_doc', 'nombre_uno', 'nombre_dos', 'apellido_uno', 'apellido_dos', 'edad', 'fecha_nacimiento', 'email', 'rol_id'];
+    protected $fillable = ['tipo_doc', 'num_doc', 'nombre_uno', 'nombre_dos', 'apellido_uno', 'apellido_dos', 'telefono', 'rol_id'];
 
     public function tipo_doc()
     {
@@ -16,11 +16,6 @@ class Personas extends Model
     public function rol()
     {
         return $this->belongsTo(Rol::class);
-    }
-
-    public function telefono()
-    {
-        return $this->hasMany(Telefono::class);
     }
 
     public function acceso()

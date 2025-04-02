@@ -42,16 +42,8 @@
                         <input type="text" id="apellido_dos" name="apellido_dos" class="form-control">
                     </div>
                     <div class="col-md-6">
-                        <label for="edad" class="form-label">Edad:</label>
-                        <input type="number" id="edad" name="edad" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
-                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email:</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <label for="telefono" class="form-label">Telefono:</label>
+                        <input type="text" id="telefono" name="telefono" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label for="rol_id" class="form-label">Rol:</label>

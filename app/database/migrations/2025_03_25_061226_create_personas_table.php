@@ -19,9 +19,7 @@ return new class extends Migration
             $table->string('nombre_dos')->nullable();
             $table->string('apellido_uno');
             $table->string('apellido_dos')->nullable();
-            $table->integer('edad');
-            $table->date('fecha_nacimiento');
-            $table->string('email')->unique();
+            $table->string('telefono')->unique();
             $table->foreignId('rol_id')->constrained('rols');
             $table->timestamps();
         });
