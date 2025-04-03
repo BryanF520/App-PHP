@@ -15,23 +15,12 @@ Route::get('/', function () {
 // Rutas del CRUD de personas
 Route::resource('personas', PersonasController::class);
 Route::get('/personas', [PersonasController::class, 'index'])->name('personas.index');
-Route::put('/personas/{persona}', [PersonasController::class, 'update'])->name('personas.update');
+Route::put('/personas/{personas}', [PersonasController::class, 'update'])->name('personas.update');
 
 // Rutas para el login
 Route::get('login', [AuthLoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthLoginController::class, 'login']);
-
-// Rutas protegidas según el rol
-Route::get('/admin/index', function () {
-    return view('admin.index');
-})->name('admin.index')->middleware('rol:admin');
-
-Route::get('/recepcionista/index', function () {
-    return view('recepcionista.index');
-})->name('recepcionista.index')->middleware('rol:recepcionista');
-
-Route::view('/admin/index', 'admin.index')->name('admin.index');
-Route::view('/recepcionista/index', 'recepcionista.index')->name('recepcionista.index');
+Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
 
 // Ruta para cerrar sesión
 Route::post('/logout', function (Request $request) {

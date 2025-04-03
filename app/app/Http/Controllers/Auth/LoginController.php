@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+
 
 class LoginController extends Controller
 {
@@ -34,15 +37,19 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             // Redirigir según el rol
-            if ($predefinedUser[$credentials['usuario']]['rol'] === 'admin') {
-                return view('admin.index'); // Vista para admin
-            } elseif ($predefinedUser[$credentials['usuario']]['rol'] === 'recepcionista') {
-                return view('recepcionista.index'); // Vista para recepcionista
-            }
+            return redirect()->route('personas.index');
         }
 
         return back()->withErrors([
             'usuario' => 'Las credenciales no coinciden con nuestros registros.',
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

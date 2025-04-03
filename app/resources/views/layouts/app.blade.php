@@ -17,12 +17,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    @if (request()->is('login'))
+                    @if (session()->has('rol') && !request()->is('login'))
                     <li class="nav-item"><a class="nav-link" href="{{ route('personas.index') }}">Personas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('empresas.index') }}">Empresas</a></li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link">Cerrar sesión</button>
+                    </form>
                     @endif
                 </ul>
             </div>
+
         </div>
     </nav>
 

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Contracts\PersonaServiceInterface;
 use App\Contracts\RolServiceInterface;
 use App\Contracts\TipodocServiceInterface;
+use Illuminate\Support\Facades\Log;
+
 
 class PersonasController extends Controller
 {
@@ -77,7 +79,7 @@ class PersonasController extends Controller
             'nombre_dos' => 'nullable',
             'apellido_uno' => 'nullable',
             'apellido_dos' => 'nullable',
-            'telefono' => 'nullable|unique:personas',
+            'telefono' => 'nullable|unique:personas,telefono,' . $id . ',id',
             'rol_id' => 'nullable|exists:rols,id',
         ]);
 
@@ -86,6 +88,8 @@ class PersonasController extends Controller
             return back()->withErrors('Error al actualizar la persona.');
         }
         return redirect()->route('personas.index')->with('success', 'Persona actualizada correctamente');
+
+        Log::info('Datos recibidos:', $request->all());
     }
 
 

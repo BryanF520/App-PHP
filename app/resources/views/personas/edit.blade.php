@@ -16,49 +16,41 @@
                         <select name="tipo_doc" id="tipo_doc" class="form-control">
                             <option value="">Seleccione un tipo de documento</option>
                             @foreach ($tipodocs as $doc)
-                            <option value="{{ $doc->id }}">{{ $doc->tipo_doc }}</option>
+                            <option value="{{ $doc->id }}" {{ $persona->tipo_doc == $doc->id ? 'selected' : ''}}>{{ $doc->tipo_doc }}</option>
                             @endforeach
 
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label for="num_doc" class="form-label">Número de Documento:</label>
-                        <input type="text" id="num_doc" name="num_doc" class="form-control">
+                        <input type="text" id="num_doc" name="num_doc" class="form-control" value="{{ $persona->num_doc }}">
                     </div>
                     <div class="col-md-6">
                         <label for="nombre_uno" class="form-label">Primer Nombre:</label>
-                        <input type="text" id="nombre_uno" name="nombre_uno" class="form-control">
+                        <input type="text" id="nombre_uno" name="nombre_uno" class="form-control" value="{{ $persona->nombre_uno }}">
                     </div>
                     <div class="col-md-6">
                         <label for="nombre_dos" class="form-label">Segundo Nombre:</label>
-                        <input type="text" id="nombre_dos" name="nombre_dos" class="form-control">
+                        <input type="text" id="nombre_dos" name="nombre_dos" class="form-control" value="{{ $persona->nombre_dos }}">
                     </div>
                     <div class="col-md-6">
                         <label for="apellido_uno" class="form-label">Primer Apellido:</label>
-                        <input type="text" id="apellido_uno" name="apellido_uno" class="form-control">
+                        <input type="text" id="apellido_uno" name="apellido_uno" class="form-control" value="{{ $persona->apellido_uno }}">
                     </div>
                     <div class="col-md-6">
                         <label for="apellido_dos" class="form-label">Segundo Apellido:</label>
-                        <input type="text" id="apellido_dos" name="apellido_dos" class="form-control">
+                        <input type="text" id="apellido_dos" name="apellido_dos" class="form-control" value="{{ $persona->apellido_dos }}">
                     </div>
                     <div class="col-md-6">
-                        <label for="edad" class="form-label">Edad:</label>
-                        <input type="number" id="edad" name="edad" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
-                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email:</label>
-                        <input type="email" id="email" name="email" class="form-control">
+                        <label for="telefono" class="form-label">Telefono:</label>
+                        <input type="text" id="telefono" name="telefono" class="form-control" value="{{ $persona->telefono }}">
                     </div>
                     <div class="col-md-6">
                         <label for="rol_id" class="form-label">Rol:</label>
                         <select name="rol_id" id="rol_id" class="form-control">
                             <option value="" disabled selected>Seleccione un Rol</option>
                             @foreach ($roles as $rol)
-                            <option value="{{ $rol->id }}">{{ $rol->rol }}</option>
+                            <option value="{{ $rol->id }}" {{$persona->rol_id == $rol->id ? 'selected' : ''}}>{{ $rol->rol }}</option>
                             @endforeach
                         </select>
                     </div>
