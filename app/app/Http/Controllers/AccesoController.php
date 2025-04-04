@@ -85,4 +85,23 @@ class AccesoController extends Controller
         $this->accesoService->desactivarAcceso($id);
         return redirect()->route('accesos.index')->with('success', 'Acceso eliminado correctamente');
     }
+
+    public function buscar(Request $request)
+    {
+        // Validar que se haya proporcionado una fecha válida
+        $request->validate([
+            'fecha_ingreso' => 'required|date',
+        ]);
+
+        // Obtener la fecha de ingreso desde el formulario
+        $fechaIngreso = $request->input('fecha_ingreso');
+
+        // Usar el servicio para buscar accesos por fecha
+        $accesos = $this->accesoService->buscarPorFecha($fechaIngreso);
+
+        // Retornar una vista con los resultados
+        return view('accesos.resultados', compact('accesos', 'fechaIngreso'));
+    }
 }
+
+

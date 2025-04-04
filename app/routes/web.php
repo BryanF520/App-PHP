@@ -37,3 +37,6 @@ Route::put('/empresas/{persona}', [EmpresaController::class, 'update'])->name('e
 Route::resource('accesos', AccesoController::class);
 Route::get('/accesos', [AccesoController::class, 'index'])->name('accesos.index');
 Route::put('/accesos/{acceso}', [AccesoController::class, 'update'])->name('accesos.update');
+
+
+Route::get('/accesos/buscar', [AccesoController::class, 'buscar'])->name('accesos.buscar');
