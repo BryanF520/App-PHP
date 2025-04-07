@@ -36,6 +36,12 @@
                     @endif
                 </ul>
                 @if (session()->has('rol') && !request()->is('login'))
+                <!-- Formulario de Búsqueda -->
+                <form method="GET" action="{{ route('accesos.buscar') }}" class="d-flex me-3">
+                    <input class="form-control me-2" type="date" name="fecha_ingreso" placeholder="Buscar por fecha" aria-label="Buscar">
+                    <button class="btn btn-outline-light" type="submit">Buscar</button>
+                </form>
+                <!-- Botón de Cerrar Sesión -->
                 <form method="POST" action="{{ route('logout') }}" class="d-flex">
                     @csrf
                     <button type="submit" class="btn btn-outline-light">Cerrar sesión</button>

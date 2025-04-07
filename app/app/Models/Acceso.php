@@ -17,4 +17,11 @@ class Acceso extends Model
     {
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
+
+    public function obtenerAcceso(int $id): Acceso
+    {
+        return Acceso::findOrFail($id);
+    }
+
+    
 }
