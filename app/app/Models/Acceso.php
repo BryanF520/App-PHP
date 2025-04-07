@@ -10,11 +10,11 @@ class Acceso extends Model
 
     public function persona()
     {
-        return $this->belongsTo(Personas::class);
+        return $this->belongsTo(Personas::class, 'persona_id', 'id');
     }
 
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class);
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 }

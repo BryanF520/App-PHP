@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Models\Personas;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -17,36 +19,38 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
+        // Validar las credenciales
         $credentials = $request->validate([
-            'usuario' => 'required',
+            'nombre_uno' => 'required',
             'password' => 'required',
         ]);
 
-        // Credenciales predefinidas
-        $predefinedUser = [
-            'admin' => ['password' => 'asd', 'rol' => 'admin'],
-            'recepcionista' => ['password' => '123', 'rol' => 'recepcionista']
-        ];
+        // Obtener el usuario de la base de datos
+        $user = Personas::where('nombre_uno', $credentials['nombre_uno'])->first();
 
-        if (
-            isset($predefinedUser[$credentials['usuario']]) &&
-            $credentials['password'] === $predefinedUser[$credentials['usuario']]['password']
-        ) {
-            // Guardar el rol en sesión
-            $request->session()->put('rol', $predefinedUser[$credentials['usuario']]['rol']);
+        // Verificar si el usuario existe y la contraseña es correcta
+        if ($user && Hash::check($credentials['password'], $user->password) && ($user->rol_id == 1 || $user->rol_id == 2)) {
+            // Guardar el rol, nombre y otros datos en la sesión
+            Auth::guard()->login($user);
+            $request->session()->put('rol', $user->rol_id);
+            $request->session()->put('usuario', $user->nombre_uno);
             $request->session()->regenerate();
 
+
+
             // Redirigir según el rol
-            return redirect()->route('personas.index');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
-            'usuario' => 'Las credenciales no coinciden con nuestros registros.',
+            'nombre_uno' => 'Las credenciales no coinciden con nuestros registros.',
         ]);
     }
 
     public function logout(Request $request)
     {
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

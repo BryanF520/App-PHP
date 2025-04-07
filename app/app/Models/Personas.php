@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Personas extends Model
+class Personas extends Authenticatable
 {
-    protected $fillable = ['tipo_doc', 'num_doc', 'nombre_uno', 'nombre_dos', 'apellido_uno', 'apellido_dos', 'telefono', 'rol_id'];
+    protected $fillable = ['tipo_doc', 'num_doc', 'nombre_uno', 'nombre_dos', 'apellido_uno', 'apellido_dos', 'telefono', 'rol_id', 'password'];
+    protected $hidden = ['password'];
 
-    public function tipo_doc()
+    public function tipoDoc()
     {
-        return $this->belongsTo(Tipo_doc::class);
+        return $this->belongsTo(Tipo_doc::class, 'tipo_doc', 'id');
     }
 
     public function rol()
     {
-        return $this->belongsTo(Rol::class);
+        return $this->belongsTo(Rol::class, 'rol_id', 'id');
     }
 
     public function acceso()

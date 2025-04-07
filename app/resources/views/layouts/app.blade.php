@@ -17,16 +17,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    @if (session()->has('rol') && !request()->is('login'))
+                    @if (session()->has('rol') && !request()->is('login') && !request()->is('home'))
+                    @if (!request()->routeIs(['personas.index', 'personas.create', 'personas.edit', 'personas.show']))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('personas.index') }}">Personas</a>
                     </li>
+                    @endif
+                    @if (!request()->routeIs(['empresas.index', 'empresas.create', 'empresas.edit', 'empresas.show']))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('empresas.index') }}">Empresas</a>
                     </li>
+                    @endif
+                    @if (!request()->routeIs(['accesos.index', 'accesos.create', 'accesos.edit', 'accesos.show']))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('accesos.index') }}">Accesos</a>
                     </li>
+                    @endif
                     @endif
                 </ul>
                 @if (session()->has('rol') && !request()->is('login'))

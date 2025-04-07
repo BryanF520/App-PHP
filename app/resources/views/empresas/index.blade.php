@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="mb-0">Lista de Empresas</h1>
-        @if (session()->has('rol') && session('rol') === 'admin')
+        @if (session('rol') == 1)
         <a href="{{ route('empresas.create') }}" class="btn btn-primary">Nueva Empresa</a>
         @endif
     </div>
@@ -40,7 +40,7 @@
                     <td>
                         <div class="d-flex gap-2">
                             <a href="{{ route('empresas.show', $empresa->id) }}" class="btn btn-info btn-sm">Ver</a>
-                            @if (session()->has('rol') && session('rol') === 'admin')
+                            @if (session('rol') == 1)
                             <a href="{{ route('empresas.edit', $empresa->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar esta empresa?')" style="display:inline;">
                                 @csrf

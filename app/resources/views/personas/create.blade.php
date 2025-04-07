@@ -54,11 +54,15 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary">Crear Persona</button>
-                </div>
+                    @if (session('rol') == 1)
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    </div>
+                    @endif
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary">Crear Persona</button>
+                    </div>
             </form>
         </div>
     </div>

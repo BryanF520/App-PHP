@@ -25,6 +25,7 @@ class AccesoController extends Controller
     }
     public function index()
     {
+        $accesos = Acceso::with('persona', 'empresa')->get();
         $accesos = $this->accesoService->listarAccesos();
         return view('accesos.index', compact('accesos'));
     }
@@ -32,7 +33,8 @@ class AccesoController extends Controller
 
     public function create()
     {
-        $personas = Personas::all();
+
+        $personas = Personas::whereIn('rol_id', [3, 4])->get();
         $empresas = Empresa::all();
         return view('accesos.create', compact('personas', 'empresas'));
     }

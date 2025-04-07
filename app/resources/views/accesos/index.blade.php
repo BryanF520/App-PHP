@@ -25,14 +25,14 @@
                     @forelse ($accesos as $acceso)
                     <tr>
                         <td>{{ $acceso->id }}</td>
-                        <td>{{ $acceso->persona_id }}</td>
+                        <td>{{ $acceso->persona->nombre_uno ?? 'Null' }}</td>
                         <td>{{ $acceso->motivo }}</td>
                         <td>{{ $acceso->fecha_ingreso }}</td>
-                        <td>{{ $acceso->empresa_id }}</td>
+                        <td>{{ $acceso->empresa->nombre ?? 'Null' }}</td>
                         <td>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('accesos.show', $acceso->id) }}" class="btn btn-info btn-sm">Ver</a>
-                                @if (session()->has('rol') && session('rol') === 'admin')
+                                @if (session('rol') == 1)
                                 <a href="{{ route('accesos.edit', $acceso->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                 <form action="{{ route('accesos.destroy', $acceso->id) }}" method="POST" onsubmit="return confirm('¿Está seguro de desactivar este usuario?')" style="display:inline;">
                                     @csrf

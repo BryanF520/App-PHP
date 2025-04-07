@@ -12,11 +12,18 @@ use App\Http\Controllers\AccesoController;
 Route::get('/', function () {
     return view('auth.login');
 });
-
+// Ruta para la vista de inicio
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 // Rutas del CRUD de personas
+
 Route::resource('personas', PersonasController::class);
 Route::get('/personas', [PersonasController::class, 'index'])->name('personas.index');
-Route::put('/personas/{personas}', [PersonasController::class, 'update'])->name('personas.update');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::put('/personas/{personas}', [PersonasController::class, 'update'])->name('personas.update');
+});
+
 
 // Rutas para el login
 Route::get('login', [AuthLoginController::class, 'showLoginForm'])->name('login');

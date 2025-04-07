@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use App\Contracts\PersonaServiceInterface;
 use App\Contracts\RolServiceInterface;
 use App\Contracts\TipodocServiceInterface;
-use Illuminate\Support\Facades\Log;
-
+use \Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class PersonasController extends Controller
 {
@@ -27,13 +27,26 @@ class PersonasController extends Controller
 
     public function index()
     {
+
+        $personas = Personas::with('rol', 'tipoDoc')->get();
         $personas = $this->personasService->listarPersonas();
         return view('personas.index', compact('personas'));
     }
 
     public function create()
     {
-        $roles = Rol::all();
+
+        $userRole = Auth::check() ? Auth::user()->rol_id : null;
+
+        if ($userRole == 1) { //admin
+            // Obtener todos los roles
+            $roles = Rol::all();
+        } elseif ($userRole == 2) { //recepcionista
+            // Obtener solo los roles de empleado y visitante
+            $roles = Rol::whereIn('id', [3, 4])->get();
+        } else {
+            abort(403, 'no puedes hacer esto');
+        }
         $tipodocs = Tipo_doc::all();
         return view('personas.create', compact('roles', 'tipodocs'));
     }
@@ -50,10 +63,20 @@ class PersonasController extends Controller
             'apellido_dos' => 'nullable',
             'telefono' => 'required|unique:personas',
             'rol_id' => 'required',
+            'password' => 'nullable|min:4',
 
         ]);
 
-        $this->personasService->crearPersona($request->all());
+        $userRole = session('rol'); // O auth()->user()->rol_id
+        if ($userRole == 2 && !in_array($request->rol_id, [3, 4])) {
+            return back()->withErrors(['rol_id' => 'No tienes permiso para asignar este rol.']);
+        }
+
+        //encriptar la contraseña
+        $data = $request->all();
+        $data['password'] = bcrypt($request->input('password'));
+
+        $this->personasService->crearPersona($data);
         return redirect()->route('personas.index')->with('success', 'Persona creada correctamente');
     }
 
@@ -82,15 +105,28 @@ class PersonasController extends Controller
             'apellido_dos' => 'nullable',
             'telefono' => 'nullable|unique:personas,telefono,' . $id . ',id',
             'rol_id' => 'nullable|exists:rols,id',
+            'password' => 'nullable|min:4', // La contraseña es opcional
         ]);
 
-        $persona = $this->personasService->actualizarPersona($id, $request->all());
+        // Obtener los datos enviados
+        $data = $request->all();
+
+        // Encriptar la contraseña solo si se envió
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->input('password'));
+        } else {
+            // Si no se envió una nueva contraseña, eliminamos el campo para no sobrescribirlo
+            unset($data['password']);
+        }
+
+        // Actualizar la persona
+        $persona = $this->personasService->actualizarPersona($id, $data);
+
         if (!$persona) {
             return back()->withErrors('Error al actualizar la persona.');
         }
-        return redirect()->route('personas.index')->with('success', 'Persona actualizada correctamente');
 
-        Log::info('Datos recibidos:', $request->all());
+        return redirect()->route('personas.index')->with('success', 'Persona actualizada correctamente');
     }
 
 

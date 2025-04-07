@@ -54,11 +54,14 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    </div>
 
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
             </form>
         </div>
     </div>

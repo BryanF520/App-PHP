@@ -33,18 +33,18 @@
                 @foreach ($personas as $persona)
                 <tr>
                     <td>{{ $persona->id }}</td>
-                    <td>{{ $persona->tipo_doc }}</td>
+                    <td>{{ $persona->tipoDoc->tipo_doc ?? 'Null' }}</td>
                     <td>{{ $persona->num_doc }}</td>
                     <td>{{ $persona->nombre_uno }}</td>
                     <td>{{ $persona->nombre_dos }}</td>
                     <td>{{ $persona->apellido_uno }}</td>
                     <td>{{ $persona->apellido_dos }}</td>
                     <td>{{ $persona->telefono }}</td>
-                    <td>{{ $persona->rol_id }}</td>
+                    <td>{{ $persona->rol->rol ?? 'Null' }}</td>
                     <td>
                         <div class="d-flex gap-2">
                             <a href="{{ route('personas.show', $persona->id) }}" class="btn btn-info btn-sm">Ver</a>
-                            @if (session()->has('rol') && session('rol') === 'admin')
+                            @if (session('rol') == 1)
                             <a href="{{ route('personas.edit', $persona->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('personas.destroy', $persona->id) }}" method="POST" onsubmit="return confirm('¿Está seguro de desactivar este usuario?')" style="display:inline;">
                                 @csrf
