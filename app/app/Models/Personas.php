@@ -22,7 +22,7 @@ class Personas extends Authenticatable
 
     public function acceso()
     {
-        return $this->hasMany(Acceso::class);
+        return $this->hasMany(Acceso::class, 'persona_id');
     }
 
     public function tarjeta()

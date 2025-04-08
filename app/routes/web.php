@@ -7,6 +7,7 @@ use App\Http\Controllers\PersonasController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\AccesoController;
+use App\Http\Controllers\IngresoController;
 
 // Ruta principal que lleva al formulario de login
 Route::get('/', function () {
@@ -41,8 +42,16 @@ Route::resource('empresas', EmpresaController::class);
 Route::get('/empresas', [EmpresaController::class, 'index'])->name('empresas.index');
 Route::put('/empresas/{persona}', [EmpresaController::class, 'update'])->name('empresas.update');
 
+
+// Rutas del CRUD de accesos
 Route::get('/accesos/buscar', [AccesoController::class, 'buscar'])->name('accesos.buscar');
 
 Route::resource('accesos', AccesoController::class);
 Route::get('/accesos', [AccesoController::class, 'index'])->name('accesos.index');
 Route::put('/accesos/{acceso}', [AccesoController::class, 'update'])->name('accesos.update');
+
+//ingresos 
+Route::resource('ingresos', IngresoController::class);
+Route::get('/ingresos/create', [IngresoController::class, 'create'])->name('ingresos.create');
+Route::post('/ingresos', [IngresoController::class, 'store'])->name('ingresos.store');
+Route::get('/ingresos', [IngresoController::class, 'index'])->name('ingresos.index');

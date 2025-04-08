@@ -33,6 +33,11 @@
                         <a class="nav-link" href="{{ route('accesos.index') }}">Accesos</a>
                     </li>
                     @endif
+                    @if (!request()->routeIs(['ingresos.index', 'ingresos.create', 'ingresos.edit', 'ingresos.show']))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('ingresos.index') }}">Ingresos</a>
+                    </li>
+                    @endif
                     @endif
                 </ul>
                 @if (session()->has('rol') && !request()->is('login'))
