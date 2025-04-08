@@ -95,15 +95,13 @@ class AccesoController extends Controller
             'fecha_ingreso' => 'required|date',
         ]);
 
-        // Obtener la fecha de ingreso desde el formulario
-        $fechaIngreso = $request->input('fecha_ingreso');
+        $fecha = $request->fecha_ingreso;
 
-        // Usar el servicio para buscar accesos por fecha
-        $accesos = $this->accesoService->buscarPorFecha($fechaIngreso);
+        $accesos = Acceso::with(['persona.tipoDoc', 'empresa'])
+            ->whereDate('fecha_ingreso', $fecha)
+            ->orderBy('fecha_ingreso', 'desc')
+            ->get();
 
-        // Retornar una vista con los resultados
-        return view('accesos.resultados', compact('accesos', 'fechaIngreso'));
+        return view('accesos.resultados', compact('accesos', 'fecha'));
     }
 }
-
-
