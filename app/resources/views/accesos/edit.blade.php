@@ -22,7 +22,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="fecha_ingreso" class="form-label">Fecha Ingreso</label>
-                    <input type="datetime" id="fecha_ingreso" name="fecha_ingreso" class="form-control" value="{{ $acceso->fecha_ingreso }}" required>
+                    <input type="datetime" id="fecha_ingreso" name="fecha_ingreso" class="form-control" value="{{ now()->format('Y-m-d\TH:i') }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="empresa_id" class="form-label">Empresa</label>

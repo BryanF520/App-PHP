@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\AccesoController;
 use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\ReporteController;
 
 // Ruta principal que lleva al formulario de login
 Route::get('/', function () {
@@ -44,7 +45,6 @@ Route::put('/empresas/{persona}', [EmpresaController::class, 'update'])->name('e
 
 
 // Rutas del CRUD de accesos
-Route::get('/accesos/buscar', [AccesoController::class, 'buscar'])->name('accesos.buscar');
 
 Route::resource('accesos', AccesoController::class);
 Route::get('/accesos', [AccesoController::class, 'index'])->name('accesos.index');
@@ -55,3 +55,9 @@ Route::resource('ingresos', IngresoController::class);
 Route::get('/ingresos/create', [IngresoController::class, 'create'])->name('ingresos.create');
 Route::post('/ingresos', [IngresoController::class, 'store'])->name('ingresos.store');
 Route::get('/ingresos', [IngresoController::class, 'index'])->name('ingresos.index');
+
+//Rutas para el reporte
+Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+
+// Ruta para descargar reportes 
+Route::get('/reportes/pdf', [ReporteController::class, 'descargarPDF'])->name('reportes.pdf');

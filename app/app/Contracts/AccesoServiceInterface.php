@@ -3,7 +3,7 @@
 namespace App\Contracts;
 
 use App\Models\Acceso;
-use DateTime;
+
 
 interface AccesoServiceInterface
 {
@@ -13,7 +13,4 @@ interface AccesoServiceInterface
     public function obtenerAcceso(int $id);
     public function actualizarAcceso(int $id, array $data);
     public function desactivarAcceso(int $id);
-
-    public function buscarPorFecha(string $fechaIngreso);
-   
 }

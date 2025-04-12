@@ -69,7 +69,7 @@
 
                 <div class="mb-3">
                     <label for="fecha_ingreso" class="form-label">Fecha de Ingreso:</label>
-                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control" value="{{ $ingreso->fecha_ingreso }}" required>
+                    <input type="datetime-local" id="fecha_ingreso" name="fecha_ingreso" class="form-control" value="{{ now()->format('Y-m-d\TH:i') }}" required>
                 </div>
 
                 <div class="d-flex justify-content-end">

@@ -53,7 +53,7 @@ class IngresoController extends Controller
             'num_doc' => 'required|string|max:30',
             'telefono' => 'required|string|max:20',
             'motivo' => 'required|string',
-            'fecha_ingreso' => 'required|date',
+            'fecha_ingreso' => 'nullable|date_format:Y-m-d\TH:i:s',
             'empresa_id' => 'required|exists:empresas,id',
         ]);
 
@@ -77,10 +77,13 @@ class IngresoController extends Controller
                 ]);
             }
 
+            // Asignar la fecha actual si no se proporciona
+            $fechaIngreso = $request->fecha_ingreso ?? now();
+
             Acceso::create([
                 'persona_id' => $persona->id,
                 'motivo' => $request->motivo,
-                'fecha_ingreso' => $request->fecha_ingreso,
+                'fecha_ingreso' => $fechaIngreso,
                 'empresa_id' => $request->empresa_id,
             ]);
 
@@ -125,7 +128,7 @@ class IngresoController extends Controller
             'apellido_dos' => 'nullable|string|max:255',
             'telefono' => 'required|string|max:20',
             'motivo' => 'required|string',
-            'fecha_ingreso' => 'required|date',
+            'fecha_ingreso' => 'nullable|date_format:Y-m-d\TH:i:s',
         ]);
 
         try {
@@ -142,9 +145,12 @@ class IngresoController extends Controller
                 'telefono' => $request->telefono,
             ]);
 
+            // Asignar la fecha actual si no se proporciona
+            $fechaIngreso = $request->fecha_ingreso ?? now();
+
             $ingreso->update([
                 'motivo' => $request->motivo,
-                'fecha_ingreso' => $request->fecha_ingreso,
+                'fecha_ingreso' => $fechaIngreso,
             ]);
 
             return redirect()->route('ingresos.index')->with('success', 'Ingreso actualizado correctamente');

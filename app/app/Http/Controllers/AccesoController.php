@@ -45,11 +45,14 @@ class AccesoController extends Controller
         $request->validate([
             'persona_id' => 'required',
             'motivo' => 'required',
-            'fecha_ingreso' => 'required',
+            'fecha_ingreso' => 'required|date_format:Y-m-d\TH:i',
             'empresa_id' => 'required'
         ]);
 
-        $this->accesoService->crearAcceso($request->all());
+        $data = $request->all();
+        $data['fecha_ingreso'] = $data['fecha_ingreso'] ?? now();
+
+        $this->accesoService->crearAcceso($data);
         return redirect()->route('accesos.index')->with('success', 'Acceso creado correctamente');
     }
 
@@ -73,7 +76,7 @@ class AccesoController extends Controller
         $request->validate([
             'persona_id' => 'required',
             'motivo' => 'required',
-            'fecha_ingreso' => 'required',
+            'fecha_ingreso' => 'required|date_format:Y-m-d\TH:i',
             'empresa_id' => 'required'
         ]);
 
@@ -86,22 +89,5 @@ class AccesoController extends Controller
     {
         $this->accesoService->desactivarAcceso($id);
         return redirect()->route('accesos.index')->with('success', 'Acceso eliminado correctamente');
-    }
-
-    public function buscar(Request $request)
-    {
-        // Validar que se haya proporcionado una fecha válida
-        $request->validate([
-            'fecha_ingreso' => 'required|date',
-        ]);
-
-        $fecha = $request->fecha_ingreso;
-
-        $accesos = Acceso::with(['persona.tipoDoc', 'empresa'])
-            ->whereDate('fecha_ingreso', $fecha)
-            ->orderBy('fecha_ingreso', 'desc')
-            ->get();
-
-        return view('accesos.resultados', compact('accesos', 'fecha'));
     }
 }

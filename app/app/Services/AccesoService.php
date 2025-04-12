@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Contracts\AccesoServiceInterface;
 use App\Models\Acceso;
-use DateTime;
+
 
 class AccesoService implements AccesoServiceInterface
 {
@@ -36,10 +36,5 @@ class AccesoService implements AccesoServiceInterface
         $acceso = Acceso::find($id);
         $acceso->delete();
         return $acceso;
-    }
-
-    public function buscarPorFecha(string $fechaIngreso)
-    {
-        return Acceso::whereDate('fecha_ingreso', $fechaIngreso)->get();
     }
 }

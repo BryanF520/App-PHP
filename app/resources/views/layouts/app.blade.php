@@ -11,13 +11,18 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Mi Aplicación</a>
+            <a class="navbar-brand" href="{{ url('/') }}">GateKeeper</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     @if (session()->has('rol') && !request()->is('login') && !request()->is('home'))
+                    @if (!request()->routeIs('home'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Inicio</a>
+                    </li>
+                    @endif
                     @if (!request()->routeIs(['personas.index', 'personas.create', 'personas.edit', 'personas.show']))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('personas.index') }}">Personas</a>
@@ -38,14 +43,14 @@
                         <a class="nav-link" href="{{ route('ingresos.index') }}">Ingresos</a>
                     </li>
                     @endif
+                    @if (!request()->routeIs(['reportes.index']))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('reportes.index') }}">Reportes</a>
+                    </li>
+                    @endif
                     @endif
                 </ul>
                 @if (session()->has('rol') && !request()->is('login'))
-                <!-- Formulario de Búsqueda -->
-                <form method="GET" action="{{ route('accesos.buscar') }}" class="d-flex me-3">
-                    <input class="form-control me-2" type="date" name="fecha_ingreso" placeholder="Buscar por fecha" aria-label="Buscar">
-                    <button class="btn btn-outline-light" type="submit">Buscar</button>
-                </form>
                 <!-- Botón de Cerrar Sesión -->
                 <form method="POST" action="{{ route('logout') }}" class="d-flex">
                     @csrf

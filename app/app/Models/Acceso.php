@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Acceso extends Model
 {
     protected $fillable = ['persona_id', 'motivo', 'fecha_ingreso', 'empresa_id'];
+    protected $casts = [
+        'fecha_ingreso' => 'datetime',
+    ];
 
     public function persona()
     {
@@ -22,6 +25,4 @@ class Acceso extends Model
     {
         return Acceso::findOrFail($id);
     }
-
-    
 }
